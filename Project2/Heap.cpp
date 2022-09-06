@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void insertHeap(int arr[12] ) {
+void insertHeap(int arr[12]) {
 	int x, tmp, y;
 	printf("서로 다른 정수 11개를 입력하시오. ");
 	for (int i = 1; i < 12; i++) {
@@ -20,8 +20,8 @@ void insertHeap(int arr[12] ) {
 		printf("\n");
 	}
 }
-int deleteHeap(int arr[12],int heap_size) {
-	int value , i = 2, x , tmp;
+int deleteHeap(int arr[12], int heap_size) {
+	int value, i = 2, x, tmp;
 	value = arr[1];
 	arr[1] = arr[heap_size];
 	arr[heap_size] = value;
@@ -55,9 +55,9 @@ int main() {
 	insertHeap(arr);
 	printf("\n");
 
-	
+
 	for (int i = 1; i <= 11; i++) {
-		sortArr[i]=deleteHeap(arr , heap_size);
+		sortArr[i] = deleteHeap(arr, heap_size);
 		heap_size--;
 	}
 
@@ -67,6 +67,6 @@ int main() {
 		printf("%d   ", sortArr[j]);
 	}
 	printf("\n");
-	
+
 	return 0;
 }
