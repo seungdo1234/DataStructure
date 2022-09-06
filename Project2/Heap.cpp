@@ -55,7 +55,6 @@ int main() {
 	insertHeap(arr);
 	printf("\n");
 
-
 	for (int i = 1; i <= 11; i++) {
 		sortArr[i] = deleteHeap(arr, heap_size);
 		heap_size--;
