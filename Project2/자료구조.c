@@ -1,72 +1,82 @@
 #include <stdio.h>
 
-void insertHeap(int arr[12] ) {
-	int x, tmp, y;
-	printf("¼­·Î ´Ù¸¥ Á¤¼ö 11°³¸¦ ÀÔ·ÂÇÏ½Ã¿À. ");
-	for (int i = 1; i < 12; i++) {
-		y = i;
-		scanf("%d", &x);
-		arr[i] = x;
-		while (i != 1 && arr[i] > arr[i / 2]) {
-			tmp = arr[i];
-			arr[i] = arr[i / 2];
-			arr[i / 2] = tmp;
-			i = i / 2;
-		}
-		i = y;
-		for (int j = 1; j <= i; j++) {
-			printf("%d   ", arr[j]);
-		}
-		printf("\n");
-	}
+typedef struct NODE {
+    int data;
+    struct NODE* link;
+}NODE;
+
+void enterData(NODE** head) {
+    NODE* prev, * x;
+    int count = 0, a = 0;
+    printf("nodeì˜ ê°œìˆ˜ : ");
+    scanf("%d", &count);
+
+    for (int i = 0; i < count; i++) {
+        printf("%dë²ˆ node : ", i + 1);
+        scanf("%d", &a);
+        x = (NODE*)malloc(sizeof(NODE));
+        x->data = a; // Xë°ì´í„°
+        x->link = NULL; // ë§í¬
+        if (*head == NULL)
+        {
+            *head = x;
+        }
+        else
+        {
+            prev->link = x;
+        }
+        prev = x;
+    }
 }
-int deleteHeap(int arr[12],int heap_size) {
-	int value , i = 2, x , tmp;
-	value = arr[1];
-	arr[1] = arr[heap_size];
-	arr[heap_size] = value;
-	heap_size -= 1;
-	while (i <= heap_size) {
-		if (i < heap_size && arr[i + 1] > arr[i]) {
-			x = i + 1;
-		}
-		else {
-			x = i;
-		}
-		if (arr[x / 2] > arr[x]) {
-			break;
-		}
-		tmp = arr[x];
-		arr[x] = arr[x / 2];
-		arr[x / 2] = tmp;
-		i = x * 2;
-	}
-	for (int j = 1; j <= heap_size + 1; j++) {
-		printf("%d   ", arr[j]);
-	}
-	printf("\n");
-
-	return value;
+void printList(NODE** head) {
+    NODE* x;
+    x = *head;
+    printf("linked list = ");
+    while (1)
+    {
+        printf("%d", x->data);
+        x = x->link;
+        if (x == NULL)
+        {
+            break;
+        }
+        else {
+            printf(" -> ");
+        }
+    }
 }
-int main() {
-	int arr[12] = { 0 , };
-	int sortArr[12] = { 0, };
-	int heap_size = 11;
-	insertHeap(arr);
-	printf("\n");
+void sumAndMaxData(NODE** head) {
+    int sum = 0, max = 0;
+    NODE* x;
+    x = *head;
+    max = x->data;
+    while (x != NULL) {
+        sum += x->data;
+        if (max < x->data) {
+            max = x->data;
+        }
+        x = x->link;
+    }
+    printf("\nsum of data = %d", sum);
+    printf("\nmax of data : %d", max);
+}
+int main(void)
+{
+    NODE** head = NULL;
 
-	
-	for (int i = 1; i <= 11; i++) {
-		sortArr[i]=deleteHeap(arr , heap_size);
-		heap_size--;
-	}
+    enterData(&head); //ë°ì´í„° ìž…ë ¥
+    printList(&head); //ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+    sumAndMaxData(&head); // sumê°’ maxê°’ ì¶œ
 
-	printf("\nheap_sort...\n");
+    NODE* next , *x;
+    x = head;
 
-	for (int j = 1; j <= 11; j++) {
-		printf("%d   ", sortArr[j]);
-	}
-	printf("\n");
-	
-	return 0;
+    while (x != NULL) //ë¦¬ìŠ¤íŠ¸ free
+    {
+        next = x->link;
+        free(x);
+        x = next;
+    }
+
+    return 0;
 }
